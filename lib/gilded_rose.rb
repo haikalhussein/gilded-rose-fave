@@ -9,11 +9,10 @@ class GildedRose
 
   def update_quality
     @items.each do |item|
-      if item.name != AGED_BRIE && item.name != BACKSTAGE_PASS
-        if item.name != SULFURAS
-          update_item_quality(item, -1)
-        end
-      else
+
+      case item.name
+
+      when BACKSTAGE_PASS
         update_item_quality(item, 1)
         if item.name == BACKSTAGE_PASS
           if item.sell_in < 11
@@ -23,6 +22,14 @@ class GildedRose
             update_item_quality(item, 1)
           end
         end
+
+      when AGED_BRIE
+        update_item_quality(item, 1)
+
+      when SULFURAS
+        #DO NOTHING
+      else
+        update_item_quality(item, -1)
       end
 
       if item.name != SULFURAS
