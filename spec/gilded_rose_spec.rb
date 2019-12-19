@@ -145,6 +145,37 @@ describe GildedRose do
       end
     end
 
+    context "conjured item" do
+      let(:name) { 'Conjured Item name something' }
+
+      context "and sell in is 100" do
+        let(:initial_sell_in) { 100 }
+        it "quality degrades twice as fast" do
+          expect(item.quality).to eq 8
+          expect(item.sell_in).to eq 99
+        end
+      end
+
+      context "and sell in is 10 days" do
+        let(:initial_sell_in) { 10 }
+
+        it "degrades quality by 2" do
+          expect(item.quality).to eq 8
+          expect(item.sell_in).to eq 9
+        end
+      end
+
+      context "and sell in is 5 days" do
+        let(:initial_sell_in) { 5 }
+
+        it "degrades quality by 2" do
+          expect(item.quality).to eq 8
+          expect(item.sell_in).to eq 4
+        end
+      end
+
+    end
+
     context "with multiple items" do
       let(:items) do
         [

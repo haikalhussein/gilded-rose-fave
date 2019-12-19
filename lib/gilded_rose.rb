@@ -6,6 +6,7 @@ class GildedRose
   AGED_BRIE = "Aged Brie"
   BACKSTAGE_PASS = "Backstage passes to a TAFKAL80ETC concert"
   SULFURAS = "Sulfuras, Hand of Ragnaros"
+  CONJURED = "Conjured Item name something"
 
   class ItemUpdater
     attr_reader :item, :quality_delta
@@ -57,6 +58,8 @@ class GildedRose
         ItemUpdater.new(item, 1).update
       when SULFURAS
         #DO NOTHING
+      when CONJURED
+        ItemUpdater.new(item, -2).update
       else
         ItemUpdater.new(item, -1).update
       end
