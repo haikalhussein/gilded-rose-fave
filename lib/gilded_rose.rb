@@ -22,7 +22,17 @@ class GildedRose
   end
 
   class BackstagePassUpdater < ItemUpdater
-
+    def quality_delta
+      if expired?(item)
+        -item.quality
+      elsif item.sell_in < 5
+        3
+      elsif item.sell_in < 10
+         2 
+      else
+        @quality_delta
+      end
+    end
   end
 
   def update_quality
@@ -34,16 +44,7 @@ class GildedRose
 
       case item.name
       when BACKSTAGE_PASS
-        if expired?(item)
-          update_item_quality(item, -item.quality) if expired?(item)
-        elsif item.sell_in < 5
-          update_item_quality(item, 3)
-        elsif item.sell_in < 10
-           update_item_quality(item, 2) 
-        else
-          update_item_quality(item, 1)
-        end
-        
+        BackstagePassUpdater.new(item, 1).update        
       when AGED_BRIE
         ItemUpdater.new(item, 1).update
       when SULFURAS
