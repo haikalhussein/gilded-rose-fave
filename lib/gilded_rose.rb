@@ -39,24 +39,28 @@ class GildedRose
 
       if item.sell_in < 0
         if item.name == AGED_BRIE
-          if item.quality < 50
-            item.quality += 1
-          end
+          increase_quality(item)
         elsif item.name == BACKSTAGE_PASS
-          item.quality = item.quality - item.quality
+          decrease_quality(item, item.quality)
         elsif item.name == SULFURAS
           #DO NOTHING
         else
-          decrease_quality(item)
+          decrease_quality(item, 1)
         end
       end
 
     end
   end
 
-  def decrease_quality(item)
+  def increase_quality(item)
+    if item.quality < 50
+      item.quality += 1
+    end
+  end
+
+  def decrease_quality(item, quality_delta)
     if item.quality > 0
-      item.quality -= 1
+      item.quality -= quality_delta
     end
   end
 
