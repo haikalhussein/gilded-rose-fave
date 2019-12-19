@@ -53,14 +53,18 @@ class GildedRose
   end
 
   def increase_quality(item)
-    if item.quality < 50
-      item.quality += 1
-    end
+    update_item_quality(item, 1)
   end
 
   def decrease_quality(item, quality_delta)
     if item.quality > 0
       item.quality -= quality_delta
+    end
+  end
+
+  def update_item_quality(item, quality_delta)
+    if item.quality < 50
+      item.quality += quality_delta
     end
   end
 
