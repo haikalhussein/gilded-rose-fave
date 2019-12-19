@@ -36,7 +36,7 @@ class GildedRose
         update_item_quality(item, -1)
       end
 
-      if item.sell_in < 0
+      if expired?(item)
         if item.name == AGED_BRIE
           update_item_quality(item, 1)
         elsif item.name == BACKSTAGE_PASS
@@ -49,6 +49,10 @@ class GildedRose
       end
 
     end
+  end
+
+  def expired?(item)
+    item.sell_in < 0
   end
 
   def update_item_quality(item, quality_delta)
