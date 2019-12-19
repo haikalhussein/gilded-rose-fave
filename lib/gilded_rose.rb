@@ -21,6 +21,10 @@ class GildedRose
     end
   end
 
+  class BackstagePassUpdater < ItemUpdater
+
+  end
+
   def update_quality
     @items.each do |item|
 
@@ -30,16 +34,16 @@ class GildedRose
 
       case item.name
       when BACKSTAGE_PASS
-        update_item_quality(item, 1)
-        if item.name == BACKSTAGE_PASS
-          if item.sell_in < 10
-            update_item_quality(item, 1)
-          end
-          if item.sell_in < 5
-            update_item_quality(item, 1)
-          end
+        if expired?(item)
+          update_item_quality(item, -item.quality) if expired?(item)
+        elsif item.sell_in < 5
+          update_item_quality(item, 3)
+        elsif item.sell_in < 10
+           update_item_quality(item, 2) 
+        else
+          update_item_quality(item, 1)
         end
-        update_item_quality(item, -item.quality) if expired?(item)
+        
       when AGED_BRIE
         ItemUpdater.new(item, 1).update
       when SULFURAS
