@@ -14,15 +14,13 @@ class GildedRose
           update_item_quality(item, -1)
         end
       else
-        if item.quality < 50
-          item.quality += 1
-          if item.name == BACKSTAGE_PASS
-            if item.sell_in < 11
-              update_item_quality(item, 1)
-            end
-            if item.sell_in < 6
-              update_item_quality(item, 1)
-            end
+        update_item_quality(item, 1)
+        if item.name == BACKSTAGE_PASS
+          if item.sell_in < 11
+            update_item_quality(item, 1)
+          end
+          if item.sell_in < 6
+            update_item_quality(item, 1)
           end
         end
       end
