@@ -16,14 +16,26 @@ class GildedRose
     end
 
     def update
-      update_item_quality(item, quality_delta)
-      update_item_quality(item, quality_delta) if expired?(item)
+      item.sell_in = item.sell_in - 1
+      update_item_quality
+      update_item_quality if expired?
     end
+
+    def expired?
+    item.sell_in < 0
+    end
+
+    def update_item_quality
+      if item.quality < 50 && item.quality > 0
+        item.quality += quality_delta
+      end
+    end
+
   end
 
   class BackstagePassUpdater < ItemUpdater
     def quality_delta
-      if expired?(item)
+      if expired?
         -item.quality
       elsif item.sell_in < 5
         3
@@ -38,10 +50,6 @@ class GildedRose
   def update_quality
     @items.each do |item|
 
-      if item.name != SULFURAS
-        item.sell_in = item.sell_in - 1
-      end
-
       case item.name
       when BACKSTAGE_PASS
         BackstagePassUpdater.new(item, 1).update        
@@ -55,13 +63,3 @@ class GildedRose
     end
   end
 end
-
-def expired?(item)
-    item.sell_in < 0
-  end
-
-def update_item_quality(item, quality_delta)
-    if item.quality < 50 && item.quality > 0
-      item.quality += quality_delta
-    end
-  end
