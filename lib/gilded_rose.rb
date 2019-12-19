@@ -26,26 +26,15 @@ class GildedRose
             update_item_quality(item, 1)
           end
         end
-
+        update_item_quality(item, -item.quality) if expired?(item)
       when AGED_BRIE
         update_item_quality(item, 1)
-
+        update_item_quality(item, 1) if expired?(item)
       when SULFURAS
         #DO NOTHING
       else
         update_item_quality(item, -1)
-      end
-
-      if expired?(item)
-        if item.name == AGED_BRIE
-          update_item_quality(item, 1)
-        elsif item.name == BACKSTAGE_PASS
-          update_item_quality(item, -item.quality)
-        elsif item.name == SULFURAS
-          #DO NOTHING
-        else
-          update_item_quality(item, -1)
-        end
+        update_item_quality(item, -1) if expired?(item)
       end
 
     end
