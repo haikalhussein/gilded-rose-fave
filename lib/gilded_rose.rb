@@ -10,15 +10,19 @@ class GildedRose
   def update_quality
     @items.each do |item|
 
+      if item.name != SULFURAS
+        item.sell_in = item.sell_in - 1
+      end
+
       case item.name
 
       when BACKSTAGE_PASS
         update_item_quality(item, 1)
         if item.name == BACKSTAGE_PASS
-          if item.sell_in < 11
+          if item.sell_in < 10
             update_item_quality(item, 1)
           end
-          if item.sell_in < 6
+          if item.sell_in < 5
             update_item_quality(item, 1)
           end
         end
@@ -30,10 +34,6 @@ class GildedRose
         #DO NOTHING
       else
         update_item_quality(item, -1)
-      end
-
-      if item.name != SULFURAS
-        item.sell_in = item.sell_in - 1
       end
 
       if item.sell_in < 0
